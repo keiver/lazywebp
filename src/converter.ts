@@ -272,7 +272,7 @@ export class ImageConverter {
 
       const message = err instanceof Error ? err.message : String(err);
       this.stats.failed.push({
-        file: path.basename(inputPath),
+        file: inputPath,
         error: message,
       });
       return { success: false, error: message };

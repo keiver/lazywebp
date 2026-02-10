@@ -9,18 +9,34 @@ struct LogEntry: Identifiable {
 
 // MARK: - Debug File Logger
 
-private let debugLog: FileHandle? = {
-    let path = "/tmp/lazywebp.log"
-    FileManager.default.createFile(atPath: path, contents: nil)
-    return FileHandle(forWritingAtPath: path)
-}()
+private final class DebugLog: @unchecked Sendable {
+    let handle: FileHandle
+
+    init?(path: String) {
+        FileManager.default.createFile(atPath: path, contents: nil)
+        guard let h = FileHandle(forWritingAtPath: path) else { return nil }
+        self.handle = h
+    }
+
+    deinit {
+        try? handle.close()
+    }
+
+    func write(_ msg: String, file: String, line: Int) {
+        let ts = ISO8601DateFormatter().string(from: Date())
+        let fn = (file as NSString).lastPathComponent
+        let entry = "[\(ts)] \(fn):\(line) \(msg)\n"
+        if let data = entry.data(using: .utf8) {
+            handle.seekToEndOfFile()
+            handle.write(data)
+        }
+    }
+}
+
+private let debugLog = DebugLog(path: "/tmp/lazywebp.log")
 
 private func dlog(_ msg: String, file: String = #file, line: Int = #line) {
-    let ts = ISO8601DateFormatter().string(from: Date())
-    let fn = (file as NSString).lastPathComponent
-    let entry = "[\(ts)] \(fn):\(line) \(msg)\n"
-    debugLog?.seekToEndOfFile()
-    debugLog?.write(entry.data(using: .utf8)!)
+    debugLog?.write(msg, file: file, line: line)
 }
 
 @Observable

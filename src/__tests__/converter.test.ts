@@ -237,7 +237,7 @@ describe("ImageConverter", () => {
       const result = await converter.run(workDir);
 
       expect(result.failed.length).toBe(1);
-      expect(result.failed[0].file).toBe("corrupt.png");
+      expect(result.failed[0].file).toContain("corrupt.png");
     });
   });
 });

@@ -3,7 +3,7 @@
 import { ImageConverter } from "./converter.js";
 import type { ParsedArgs } from "./types.js";
 
-const VERSION = "1.0.0";
+const VERSION = "1.1.0";
 
 const HELP = `
 towebp v${VERSION} — Convert images to WebP format

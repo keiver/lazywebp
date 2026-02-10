@@ -32,8 +32,9 @@ export function getDiskSpace(dir: string): Promise<{ available: number }> {
     const target = process.platform === "win32" ? path.parse(dir).root : dir;
     fs.statfs(target, (err, stats) => {
       if (err) {
+        console.warn(`Warning: could not check disk space for ${dir}: ${err.message}`);
         resolve({ available: Infinity });
-        return; // Bug fix #3: return after resolve to prevent fallthrough
+        return;
       }
       resolve({ available: stats.bavail * stats.bsize });
     });
