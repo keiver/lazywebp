@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-02-10
+- fix: dynamic version and rename to lazywebp (#2)
+
+
 ## [1.2.0] - 2026-02-10
 - 1.1.1 (#1)
 
