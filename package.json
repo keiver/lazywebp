@@ -1,0 +1,61 @@
+{
+  "name": "towebp",
+  "version": "1.0.0",
+  "description": "CLI tool to batch convert images to WebP format using Sharp",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "towebp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "webp",
+    "image",
+    "converter",
+    "sharp",
+    "batch",
+    "cli",
+    "image-processing"
+  ],
+  "author": "Keiver Hernandez (https://keiver.dev)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keiver/towebp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/keiver/towebp/issues"
+  },
+  "homepage": "https://keiver.dev/towebp",
+  "dependencies": {
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^4.0.18"
+  }
+}

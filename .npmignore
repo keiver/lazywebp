@@ -1,0 +1,11 @@
+src/
+tsconfig.json
+vitest.config.ts
+.gitignore
+*.tgz
+.github/
+.claude/
+src/__tests__/
+coverage/
+*.test.ts
+quickaction/
