@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
+import { createRequire } from "node:module";
 import { ImageConverter } from "./converter.js";
 import type { ParsedArgs } from "./types.js";
 
-const VERSION = "1.1.0";
+const require = createRequire(import.meta.url);
+const { version: VERSION } = require("../package.json") as { version: string };
 
 const HELP = `
 towebp v${VERSION} — Convert images to WebP format

@@ -1,5 +1,5 @@
 {
-  "name": "towebp",
+  "name": "lazywebp",
   "version": "1.2.0",
   "description": "CLI tool to batch convert images to WebP format using Sharp",
   "type": "module",
