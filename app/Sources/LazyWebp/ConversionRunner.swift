@@ -160,7 +160,7 @@ final class ConversionRunner: @unchecked Sendable {
             guard let located = Self.locateBinary() else {
                 dlog("convert: binary not found!")
                 await MainActor.run {
-                    self.error = "towebp not found. Run 'npm link' in the towebp project first."
+                    self.error = "lazywebp not found. Install with 'npm install -g lazywebp' first."
                     self.isRunning = false
                 }
                 return
@@ -379,8 +379,8 @@ final class ConversionRunner: @unchecked Sendable {
 
     private static func findBinary() -> (binary: String, extraPath: [String])? {
         let candidates = [
-            "/usr/local/bin/towebp",
-            "/opt/homebrew/bin/towebp",
+            "/usr/local/bin/lazywebp",
+            "/opt/homebrew/bin/lazywebp",
         ]
 
         for path in candidates {
@@ -394,7 +394,7 @@ final class ConversionRunner: @unchecked Sendable {
         if let nodes = try? FileManager.default.contentsOfDirectory(atPath: nvmDefault) {
             for node in nodes.sorted().reversed() {
                 let binDir = "\(nvmDefault)/\(node)/bin"
-                let p = "\(binDir)/towebp"
+                let p = "\(binDir)/lazywebp"
                 if FileManager.default.isExecutableFile(atPath: p) {
                     return (p, [binDir])
                 }
@@ -403,7 +403,7 @@ final class ConversionRunner: @unchecked Sendable {
 
         let which = Process()
         which.executableURL = URL(fileURLWithPath: "/bin/sh")
-        which.arguments = ["-l", "-c", "which towebp"]
+        which.arguments = ["-l", "-c", "which lazywebp"]
         let pipe = Pipe()
         which.standardOutput = pipe
         which.standardError = FileHandle.nullDevice

@@ -6,7 +6,7 @@ import path from "node:path";
 import os from "node:os";
 
 function tmpDir(): string {
-  return path.join(os.tmpdir(), `towebp-test-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+  return path.join(os.tmpdir(), `lazywebp-test-${Date.now()}-${Math.random().toString(36).slice(2)}`);
 }
 
 async function createTestImage(

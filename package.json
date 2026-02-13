@@ -12,7 +12,7 @@
     }
   },
   "bin": {
-    "towebp": "dist/index.js"
+    "lazywebp": "dist/index.js"
   },
   "files": [
     "dist",
@@ -43,12 +43,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/keiver/towebp.git"
+    "url": "git+https://github.com/keiver/lazywebp.git"
   },
   "bugs": {
-    "url": "https://github.com/keiver/towebp/issues"
+    "url": "https://github.com/keiver/lazywebp/issues"
   },
-  "homepage": "https://keiver.dev/towebp",
+  "homepage": "https://keiver.dev/lab/lazywebp",
   "dependencies": {
     "sharp": "^0.33.5"
   },

@@ -22,7 +22,7 @@
 
 ### CLI
 
-- Support multiple input files: `towebp file1.png file2.jpg dir/`
+- Support multiple input files: `lazywebp file1.png file2.jpg dir/`
 - Add `-o`/`--output` flag for specifying output directory (replaces second positional argument)
 - Non-image files are now skipped with a warning instead of throwing an error
 - Temp files are written alongside output instead of system temp directory

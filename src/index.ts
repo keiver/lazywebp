@@ -8,14 +8,14 @@ const require = createRequire(import.meta.url);
 const { version: VERSION } = require("../package.json") as { version: string };
 
 const HELP = `
-towebp v${VERSION} — Convert images to WebP format
+lazywebp v${VERSION} — Convert images to WebP format
 
 Usage:
-  towebp <file...>                  Convert file(s), output next to source
-  towebp <dir>                      Convert all images in dir, output next to sources
-  towebp -o <outputDir> <input...>  Convert to separate output directory
-  towebp -q 80 <file>               Custom quality (default: 90)
-  towebp -r <dir>                   Recursive subdirectory processing
+  lazywebp <file...>                  Convert file(s), output next to source
+  lazywebp <dir>                      Convert all images in dir, output next to sources
+  lazywebp -o <outputDir> <input...>  Convert to separate output directory
+  lazywebp -q 80 <file>               Custom quality (default: 90)
+  lazywebp -r <dir>                   Recursive subdirectory processing
 
 Options:
   -q, --quality <n>   WebP quality 1-100 (default: 90)
@@ -83,7 +83,7 @@ function parseArgs(argv: string[]): ParsedArgs {
 
     if (arg.startsWith("-")) {
       console.error(`Error: unknown option: ${arg}`);
-      console.error("Run towebp --help for usage");
+      console.error("Run lazywebp --help for usage");
       process.exit(1);
     }
 
@@ -108,7 +108,7 @@ async function main(): Promise<void> {
 
   if (parsed.inputs.length === 0) {
     console.error("Error: no input file or directory specified");
-    console.error("Run towebp --help for usage");
+    console.error("Run lazywebp --help for usage");
     process.exit(1);
   }
 

@@ -13,7 +13,7 @@ const CLI = path.resolve("src/index.ts");
 const TSX = path.resolve("node_modules/.bin/tsx");
 
 function tmpDir(): string {
-  return path.join(os.tmpdir(), `towebp-cli-test-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+  return path.join(os.tmpdir(), `lazywebp-cli-test-${Date.now()}-${Math.random().toString(36).slice(2)}`);
 }
 
 async function createTestPng(filePath: string): Promise<void> {
@@ -47,7 +47,7 @@ describe("CLI", () => {
 
   it("prints help with --help", async () => {
     const { stdout } = await exec(TSX, [CLI, "--help"]);
-    expect(stdout).toContain("towebp");
+    expect(stdout).toContain("lazywebp");
     expect(stdout).toContain("Usage:");
     expect(stdout).toContain("--quality");
   });

@@ -220,7 +220,7 @@ export class ImageConverter {
 
       tempOutput = path.join(
         path.dirname(outputPath),
-        `.towebp-${crypto.randomBytes(8).toString("hex")}.webp`
+        `.lazywebp-${crypto.randomBytes(8).toString("hex")}.webp`
       );
 
       // Ensure output directory exists (for recursive mode with subdirs)
