@@ -1,4 +1,4 @@
-# towebp - Lazy webp converter
+# lazywebp - Lazy webp converter
 
 <p align="center">
   <img src="assets/lazywebp-towebp-start.webp" alt="Lazy Webp — drop zone" width="420" />
@@ -9,30 +9,30 @@ CLI tool and native macOS app to batch convert images to WebP format. Handles si
 ## Quick Start
 
 ```bash
-npx towebp photo.png
+npx lazywebp photo.png
 ```
 
 Converts `photo.png` to `photo.webp` in the same directory.
 
 ## Install
 
-**Global** (adds `towebp` to your PATH):
+**Global** (adds `lazywebp` to your PATH):
 
 ```bash
-npm install -g towebp
+npm install -g lazywebp
 ```
 
 **Run without installing** (via npx):
 
 ```bash
-npx towebp photo.png
+npx lazywebp photo.png
 ```
 
 **From source:**
 
 ```bash
-git clone https://github.com/keiver/towebp.git
-cd towebp
+git clone https://github.com/keiver/lazywebp.git
+cd lazywebp
 npm install && npm run build && npm link
 ```
 
@@ -40,25 +40,25 @@ npm install && npm run build && npm link
 
 ```bash
 # Convert a single file (output next to source)
-towebp photo.png
+lazywebp photo.png
 
 # Convert multiple files at once
-towebp photo.png banner.jpg logo.gif
+lazywebp photo.png banner.jpg logo.gif
 
 # Convert all images in a directory
-towebp images/
+lazywebp images/
 
 # Convert to a separate output directory
-towebp -o output/ images/
+lazywebp -o output/ images/
 
 # Custom quality (1-100, default: 90)
-towebp -q 80 photo.png
+lazywebp -q 80 photo.png
 
 # Recursive subdirectory processing
-towebp -r images/
+lazywebp -r images/
 
 # Combine flags
-towebp -q 75 -r -o dist/ src/assets/
+lazywebp -q 75 -r -o dist/ src/assets/
 ```
 
 ## Options
@@ -98,7 +98,7 @@ Native SwiftUI app that wraps the CLI. Drag and drop images or folders to conver
 
 - macOS 14+
 - Swift 6.2+
-- The `towebp` CLI must be installed and available in your PATH
+- The `lazywebp` CLI must be installed and available in your PATH
 
 ### Run in development
 
