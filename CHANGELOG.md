@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [2.1.1] - 2026-02-13
+- fix: package-lock.json conflict fix (#6)
+
+
 ## [2.1.0] - 2026-02-13
 - fix: rename from webp issues (#5)
 
