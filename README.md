@@ -6,10 +6,10 @@
 
 
 <p align="center">
-  <img src="assets/lazywebp-towebp-start.webp" alt="Lazy Webp — drop zone" width="420" />
+  <img src="assets/lazywebp-towebp-start.webp" alt="Lazy Webp - drop zone" width="420" />
 </p>
 
-CLI tool and native macOS app to batch convert images to WebP format. Handles single files, multiple files, and entire directories with concurrent processing, atomic writes, and mtime-based skip logic.
+CLI tool and native macOS app to batch convert images to Webp. Handles single files, multiple files, and entire directories with concurrent processing, atomic writes, and mtime-based skip logic.
 
 ## Quick Start
 
