@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [2.0.1] - 2026-02-13
+- fix: ci readme update (#4)
+
+
 ## [2.0.0] - 2026-02-13
 - Lazywebprename (#3)
 

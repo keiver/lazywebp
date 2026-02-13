@@ -1,6 +1,6 @@
 {
   "name": "lazywebp",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "CLI tool to batch convert images to WebP format using Sharp",
   "type": "module",
   "main": "dist/index.js",
