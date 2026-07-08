@@ -47,7 +47,7 @@ export interface ParsedArgs {
   outputDir?: string;
   quality: number;
   recursive: boolean;
-  exclude: string[];
+  excludes: string[];
   help: boolean;
   version: boolean;
 }

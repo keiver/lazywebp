@@ -220,6 +220,35 @@ describe("ImageConverter", () => {
 
       expect(result.processed).toBe(1);
     });
+
+    it("prunes excluded directories without traversing them", async () => {
+      // An unreadable excluded dir proves pruning: a scan that descended
+      // into it would throw EACCES instead of skipping it.
+      await createTestImage(path.join(workDir, "top.png"));
+      const lockedDir = path.join(workDir, "locked");
+      await createTestImage(path.join(lockedDir, "hidden.png"));
+      await fs.chmod(lockedDir, 0o000);
+
+      try {
+        const converter = new ImageConverter(90, ["locked"]);
+        const result = await converter.run(workDir, undefined, true);
+        expect(result.processed).toBe(1);
+      } finally {
+        await fs.chmod(lockedDir, 0o755);
+      }
+    });
+
+    it("is unaffected by mutation of the excludes array after construction", async () => {
+      await createTestImage(path.join(workDir, "cache", "a.png"));
+      await createTestImage(path.join(workDir, "keep.png"));
+
+      const excludes = ["cache"];
+      const converter = new ImageConverter(90, excludes);
+      excludes.length = 0;
+
+      const result = await converter.run(workDir, undefined, true);
+      expect(result.processed).toBe(1);
+    });
   });
 
   describe("quality option", () => {

@@ -35,7 +35,7 @@ function parseArgs(argv: string[]): ParsedArgs {
     inputs: [],
     quality: 90,
     recursive: false,
-    exclude: [],
+    excludes: [],
     help: false,
     version: false,
   };
@@ -80,7 +80,7 @@ function parseArgs(argv: string[]): ParsedArgs {
         console.error("Error: --exclude requires a directory name argument");
         process.exit(1);
       }
-      result.exclude.push(...next.split(",").map((n) => n.trim()).filter(Boolean));
+      result.excludes.push(...next.split(",").map((n) => n.trim()).filter(Boolean));
       continue;
     }
 
@@ -125,7 +125,7 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  const converter = new ImageConverter(parsed.quality, parsed.exclude);
+  const converter = new ImageConverter(parsed.quality, parsed.excludes);
   const results = await converter.runAll(parsed.inputs, parsed.outputDir, parsed.recursive);
 
   console.log("\nConversion completed:");
