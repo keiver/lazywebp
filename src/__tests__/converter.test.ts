@@ -186,6 +186,42 @@ describe("ImageConverter", () => {
     });
   });
 
+  describe("exclude option", () => {
+    it("skips excluded directory names at any depth", async () => {
+      await createTestImage(path.join(workDir, "top.png"));
+      await createTestImage(path.join(workDir, "cache", "a.png"));
+      await createTestImage(path.join(workDir, "sub", "cache", "b.png"));
+      await createTestImage(path.join(workDir, "sub", "kept.png"));
+
+      const converter = new ImageConverter(90, ["cache"]);
+      const result = await converter.run(workDir, undefined, true);
+
+      expect(result.totalFiles).toBe(2);
+      expect(result.processed).toBe(2);
+      await expect(fs.stat(path.join(workDir, "cache", "a.webp"))).rejects.toThrow();
+      await expect(fs.stat(path.join(workDir, "sub", "cache", "b.webp"))).rejects.toThrow();
+    });
+
+    it("does not exclude files whose basename matches an excluded name", async () => {
+      await createTestImage(path.join(workDir, "cache.png"));
+
+      const converter = new ImageConverter(90, ["cache"]);
+      const result = await converter.run(workDir, undefined, true);
+
+      expect(result.processed).toBe(1);
+    });
+
+    it("still processes an explicitly-passed input directory whose name is excluded", async () => {
+      const cacheDir = path.join(workDir, "cache");
+      await createTestImage(path.join(cacheDir, "direct.png"));
+
+      const converter = new ImageConverter(90, ["cache"]);
+      const result = await converter.run(cacheDir, undefined, true);
+
+      expect(result.processed).toBe(1);
+    });
+  });
+
   describe("quality option", () => {
     it("uses custom quality", async () => {
       const inputPath = path.join(workDir, "q.png");

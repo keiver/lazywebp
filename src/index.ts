@@ -16,13 +16,15 @@ Usage:
   lazywebp -o <outputDir> <input...>  Convert to separate output directory
   lazywebp -q 80 <file>               Custom quality (default: 90)
   lazywebp -r <dir>                   Recursive subdirectory processing
+  lazywebp -r -e cache,tmp <dir>      Skip directories named cache or tmp
 
 Options:
-  -q, --quality <n>   WebP quality 1-100 (default: 90)
-  -o, --output <dir>  Output directory (default: next to source)
-  -r, --recursive     Process subdirectories recursively
-  -h, --help          Show this help message
-  -v, --version       Show version number
+  -q, --quality <n>     WebP quality 1-100 (default: 90)
+  -o, --output <dir>    Output directory (default: next to source)
+  -r, --recursive       Process subdirectories recursively
+  -e, --exclude <names> Skip directories by name during scans (comma-separated, repeatable)
+  -h, --help            Show this help message
+  -v, --version         Show version number
 
 Supported formats: jpg, jpeg, png, gif, bmp, tiff, webp
 `.trim();
@@ -33,6 +35,7 @@ function parseArgs(argv: string[]): ParsedArgs {
     inputs: [],
     quality: 90,
     recursive: false,
+    exclude: [],
     help: false,
     version: false,
   };
@@ -68,6 +71,16 @@ function parseArgs(argv: string[]): ParsedArgs {
       }
       // Clamp to 1-100
       result.quality = Math.max(1, Math.min(val, 100));
+      continue;
+    }
+
+    if (arg === "-e" || arg === "--exclude") {
+      const next = args[++i];
+      if (next === undefined) {
+        console.error("Error: --exclude requires a directory name argument");
+        process.exit(1);
+      }
+      result.exclude.push(...next.split(",").map((n) => n.trim()).filter(Boolean));
       continue;
     }
 
@@ -112,7 +125,7 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  const converter = new ImageConverter(parsed.quality);
+  const converter = new ImageConverter(parsed.quality, parsed.exclude);
   const results = await converter.runAll(parsed.inputs, parsed.outputDir, parsed.recursive);
 
   console.log("\nConversion completed:");

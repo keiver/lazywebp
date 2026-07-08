@@ -11,10 +11,11 @@ export class ImageConverter {
   config: ConversionConfig;
   stats: ConversionStats;
 
-  constructor(quality = 90) {
+  constructor(quality = 90, excludes: string[] = []) {
     this.config = {
       quality: Math.max(1, Math.min(quality, 100)),
       maxConcurrent: Math.max(1, Math.min(os.cpus().length - 1, 4)),
+      excludes,
     };
 
     this.stats = {
@@ -108,7 +109,12 @@ export class ImageConverter {
       ? await fs.readdir(inputDir, { recursive: true })
       : await fs.readdir(inputDir);
 
-    const imageFiles = (entries as string[]).filter((entry) => isImageFile(entry));
+    const excludeSet = new Set(this.config.excludes);
+    const imageFiles = (entries as string[]).filter(
+      (entry) =>
+        isImageFile(entry) &&
+        !path.dirname(entry).split(path.sep).some((segment) => excludeSet.has(segment))
+    );
 
     for (const file of imageFiles) {
       const inputPath = path.join(inputDir, file);

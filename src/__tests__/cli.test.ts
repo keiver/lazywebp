@@ -108,4 +108,36 @@ describe("CLI", () => {
       expect(error.stderr).toContain("unknown option");
     }
   });
+
+  it("skips excluded directories with -e in recursive mode", async () => {
+    await createTestPng(path.join(workDir, "keep.png"));
+    await createTestPng(path.join(workDir, "skipme", "dropped.png"));
+
+    const { stdout } = await exec(TSX, [CLI, "-r", "-e", "skipme", workDir]);
+    expect(stdout).toContain("Total files: 1");
+
+    const stat = await fs.stat(path.join(workDir, "keep.webp"));
+    expect(stat.size).toBeGreaterThan(0);
+    await expect(fs.stat(path.join(workDir, "skipme", "dropped.webp"))).rejects.toThrow();
+  });
+
+  it("accepts comma-separated names for --exclude", async () => {
+    await createTestPng(path.join(workDir, "keep.png"));
+    await createTestPng(path.join(workDir, "cache", "a.png"));
+    await createTestPng(path.join(workDir, "tmp", "b.png"));
+
+    const { stdout } = await exec(TSX, [CLI, "-r", "--exclude", "cache,tmp", workDir]);
+    expect(stdout).toContain("Total files: 1");
+  });
+
+  it("exits with error when --exclude has no value", async () => {
+    try {
+      await exec(TSX, [CLI, "--exclude"]);
+      expect.fail("should have thrown");
+    } catch (err: unknown) {
+      const error = err as { code: number; stderr: string };
+      expect(error.code).toBe(1);
+      expect(error.stderr).toContain("--exclude requires");
+    }
+  });
 });
