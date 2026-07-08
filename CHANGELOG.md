@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-07-08
+- feat(cli): add -e/--exclude to skip directories by name during scans (#7)
+
+
 ## [2.1.1] - 2026-02-13
 - fix: package-lock.json conflict fix (#6)
 
