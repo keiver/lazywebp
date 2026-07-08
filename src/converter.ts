@@ -193,9 +193,9 @@ export class ImageConverter {
   }
 
   private async getDirectorySize(dir: string): Promise<number> {
-    const files = await fs.readdir(dir, { recursive: true });
+    const files = await this.walkDirectory(dir, new Set(this.config.excludes));
     const sizes = await Promise.all(
-      (files as string[]).map(async (file) => {
+      files.map(async (file) => {
         try {
           const stats = await fs.stat(path.join(dir, file));
           return stats.isFile() ? stats.size : 0;
