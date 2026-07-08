@@ -1,6 +1,7 @@
 export interface ConversionConfig {
   quality: number;
   maxConcurrent: number;
+  excludes: string[];
 }
 
 export interface ConversionStats {
@@ -46,6 +47,7 @@ export interface ParsedArgs {
   outputDir?: string;
   quality: number;
   recursive: boolean;
+  excludes: string[];
   help: boolean;
   version: boolean;
 }

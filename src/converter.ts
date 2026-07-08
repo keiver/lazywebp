@@ -11,10 +11,11 @@ export class ImageConverter {
   config: ConversionConfig;
   stats: ConversionStats;
 
-  constructor(quality = 90) {
+  constructor(quality = 90, excludes: string[] = []) {
     this.config = {
       quality: Math.max(1, Math.min(quality, 100)),
       maxConcurrent: Math.max(1, Math.min(os.cpus().length - 1, 4)),
+      excludes: [...excludes],
     };
 
     this.stats = {
@@ -104,8 +105,9 @@ export class ImageConverter {
       await this.validatePaths(inputDir, resolvedOutput);
     }
 
+    const excludeSet = new Set(this.config.excludes);
     const entries = recursive
-      ? await fs.readdir(inputDir, { recursive: true })
+      ? await this.walkDirectory(inputDir, excludeSet)
       : await fs.readdir(inputDir);
 
     const imageFiles = (entries as string[]).filter((entry) => isImageFile(entry));
@@ -128,6 +130,26 @@ export class ImageConverter {
       this.stats.totalFiles++;
       tasks.push({ inputPath, outputPath });
     }
+  }
+
+  // Walks recursively, pruning excluded directory names before descending so
+  // excluded trees are never traversed. Returns paths relative to rootDir.
+  private async walkDirectory(rootDir: string, excludeSet: Set<string>, relDir = ""): Promise<string[]> {
+    const dirents = await fs.readdir(path.join(rootDir, relDir), { withFileTypes: true });
+    const files: string[] = [];
+
+    for (const dirent of dirents) {
+      const rel = relDir ? path.join(relDir, dirent.name) : dirent.name;
+      if (dirent.isDirectory()) {
+        if (!excludeSet.has(dirent.name)) {
+          files.push(...(await this.walkDirectory(rootDir, excludeSet, rel)));
+        }
+      } else {
+        files.push(rel);
+      }
+    }
+
+    return files;
   }
 
   private skipFile(message: string): void {
@@ -171,9 +193,9 @@ export class ImageConverter {
   }
 
   private async getDirectorySize(dir: string): Promise<number> {
-    const files = await fs.readdir(dir, { recursive: true });
+    const files = await this.walkDirectory(dir, new Set(this.config.excludes));
     const sizes = await Promise.all(
-      (files as string[]).map(async (file) => {
+      files.map(async (file) => {
         try {
           const stats = await fs.stat(path.join(dir, file));
           return stats.isFile() ? stats.size : 0;

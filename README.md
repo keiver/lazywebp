@@ -62,6 +62,10 @@ lazywebp -q 80 photo.png
 # Recursive subdirectory processing
 lazywebp -r images/
 
+# Skip directories by name during scans (comma-separated, repeatable)
+lazywebp -r -e cache,tmp images/
+lazywebp -r -e cache -e tmp images/
+
 # Combine flags
 lazywebp -q 75 -r -o dist/ src/assets/
 ```
@@ -73,6 +77,7 @@ lazywebp -q 75 -r -o dist/ src/assets/
 | `-q, --quality <n>` | WebP quality 1-100 (default: 90) |
 | `-o, --output <dir>` | Output directory (default: next to source) |
 | `-r, --recursive` | Process subdirectories recursively |
+| `-e, --exclude <names>` | Skip directories by name during scans (comma-separated, repeatable) |
 | `-h, --help` | Show help message |
 | `-v, --version` | Show version number |
 

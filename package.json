@@ -29,7 +29,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "prepublishOnly": "npm run build",
-    "install": "sh app/install-app.sh"
+    "install:app": "bash app/install-app.sh"
   },
   "keywords": [
     "webp",
