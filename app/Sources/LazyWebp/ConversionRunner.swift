@@ -385,7 +385,8 @@ final class ConversionRunner: @unchecked Sendable {
 
         for path in candidates {
             if FileManager.default.isExecutableFile(atPath: path) {
-                return (path, [])
+                let binDir = (path as NSString).deletingLastPathComponent
+                return (path, [binDir])
             }
         }
 
