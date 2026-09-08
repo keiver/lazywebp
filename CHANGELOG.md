@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [2.2.1] - 2026-09-08
+- fix(app): add binary dir to PATH so env node resolves for global lazywebp (#8)
+
+
 ## [2.2.0] - 2026-07-08
 - feat(cli): add -e/--exclude to skip directories by name during scans (#7)
 
